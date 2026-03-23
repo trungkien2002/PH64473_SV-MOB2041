@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.ActivityManHinhChinh">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/text_grey"
+        android:elevation="4dp"
+        app:titleTextColor="@android:color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_TieuDeThongKe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thống kê"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mtb_BaoCaoDoanhThu"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="16dp"
+                android:text="Báo cáo doanh thu"
+                android:textColor="@android:color/black"
+                android:textAllCaps="false"
+                android:gravity="start|center_vertical"
+                app:icon="@android:drawable/ic_menu_report_image"
+                app:iconTint="@color/text_grey"
+                app:iconGravity="start"
+                app:iconPadding="16dp"
+                app:strokeColor="@color/text_grey"
+                app:strokeWidth="1dp"
+                app:cornerRadius="10dp"
+                app:backgroundTint="@color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mtb_TopSanPham"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="16dp"
+                android:text="Top sản phẩm bán chạy"
+                android:textColor="@android:color/black"
+                android:textAllCaps="false"
+                android:gravity="start|center_vertical"
+                app:icon="@android:drawable/ic_menu_gallery"
+                app:iconTint="@color/text_grey"
+                app:iconGravity="start"
+                app:iconPadding="16dp"
+                app:strokeColor="@color/text_grey"
+                app:strokeWidth="1dp"
+                app:cornerRadius="10dp"
+                app:backgroundTint="@color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mtb_TopKhachHang"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="16dp"
+                android:text="Top khách hàng tiêu biểu"
+                android:textColor="@android:color/black"
+                android:textAllCaps="false"
+                android:gravity="start|center_vertical"
+                app:icon="@android:drawable/ic_menu_myplaces"
+                app:iconTint="@color/text_grey"
+                app:iconGravity="start"
+                app:iconPadding="16dp"
+                app:strokeColor="@color/text_grey"
+                app:strokeWidth="1dp"
+                app:cornerRadius="10dp"
+                app:backgroundTint="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Quản lý hệ thống"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mtb_QuanLySanPham"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="16dp"
+                android:text="Quản lý Sản phẩm"
+                android:textColor="@android:color/black"
+                android:textAllCaps="false"
+                android:gravity="start|center_vertical"
+                app:icon="@android:drawable/ic_menu_manage"
+                app:iconTint="@color/text_grey"
+                app:iconGravity="start"
+                app:iconPadding="16dp"
+                app:strokeColor="@color/text_grey"
+                app:strokeWidth="1dp"
+                app:cornerRadius="10dp"
+                app:backgroundTint="@color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mtb_QuanLyKhachHang"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="16dp"
+                android:text="Quản lý Khách hàng"
+                android:textColor="@android:color/black"
+                android:textAllCaps="false"
+                android:gravity="start|center_vertical"
+                app:icon="@android:drawable/ic_menu_view"
+                app:iconTint="@color/text_grey"
+                app:iconGravity="start"
+                app:iconPadding="16dp"
+                app:strokeColor="@color/text_grey"
+                app:strokeWidth="1dp"
+                app:cornerRadius="10dp"
+                app:backgroundTint="@color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mtb_QuanLyHoaDon"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="16dp"
+                android:text="Quản lý Hóa đơn"
+                android:textColor="@android:color/black"
+                android:textAllCaps="false"
+                android:gravity="start|center_vertical"
+                app:icon="@android:drawable/ic_menu_save"
+                app:iconTint="@color/text_grey"
+                app:iconGravity="start"
+                app:iconPadding="16dp"
+                app:strokeColor="@color/text_grey"
+                app:strokeWidth="1dp"
+                app:cornerRadius="10dp"
+                app:backgroundTint="@color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mtb_QuanLyDanhMuc"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="16dp"
+                android:text="Quản lý Danh mục"
+                android:textColor="@android:color/black"
+                android:textAllCaps="false"
+                android:gravity="start|center_vertical"
+                app:icon="@android:drawable/ic_menu_sort_by_size"
+                app:iconTint="@color/text_grey"
+                app:iconGravity="start"
+                app:iconPadding="16dp"
+                app:strokeColor="@color/text_grey"
+                app:strokeWidth="1dp"
+                app:cornerRadius="10dp"
+                app:backgroundTint="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_TieuDeTaiKhoan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Tài khoản &amp; Bảo mật"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mtb_QuanlyNhanVien"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="16dp"
+                android:text="Quản lý nhân viên"
+                android:textColor="@android:color/black"
+                android:textAllCaps="false"
+                android:gravity="start|center_vertical"
+                app:icon="@android:drawable/ic_menu_edit"
+                app:iconTint="@color/text_grey"
+                app:iconGravity="start"
+                app:iconPadding="16dp"
+                app:strokeColor="@color/text_grey"
+                app:strokeWidth="1dp"
+                app:cornerRadius="10dp"
+                app:backgroundTint="@color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mtb_DoiMatKhau"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="16dp"
+                android:text="Đổi mật khẩu"
+                android:textColor="@android:color/black"
+                android:textAllCaps="false"
+                android:gravity="start|center_vertical"
+                app:icon="@android:drawable/ic_lock_lock"
+                app:iconTint="@color/text_grey"
+                app:iconGravity="start"
+                app:iconPadding="16dp"
+                app:strokeColor="@color/text_grey"
+                app:strokeWidth="1dp"
+                app:cornerRadius="10dp"
+                app:backgroundTint="@color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mtb_DangXuat"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="16dp"
+                android:text="Đăng xuất"
+                android:textColor="@android:color/black"
+                android:textAllCaps="false"
+                android:gravity="start|center_vertical"
+                app:icon="@android:drawable/ic_lock_power_off"
+                app:iconTint="@color/text_grey"
+                app:iconGravity="start"
+                app:iconPadding="16dp"
+                app:strokeColor="@color/text_grey"
+                app:strokeWidth="1dp"
+                app:cornerRadius="10dp"
+                app:backgroundTint="@color/white" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
