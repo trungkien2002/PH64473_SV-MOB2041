@@ -105,6 +105,10 @@ public class ActivityManHinhChinh extends AppCompatActivity {
             startActivity(new Intent(ActivityManHinhChinh.this, ActivityDangNhap.class));
             finish();
         });
+
+        btnDoiMatKhau.setOnClickListener(v -> {
+            startActivity(new Intent(ActivityManHinhChinh.this, ActivityDoiMatKhau.class));
+        });
     }
 
     @Override

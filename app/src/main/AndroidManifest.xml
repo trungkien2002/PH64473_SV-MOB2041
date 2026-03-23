@@ -12,34 +12,37 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DựÁnMẫu">
         <activity
-            android:name="com.example.PH64473_SV_MOB2041.activity.ActivityThongKeKhachHang"
+            android:name=".activity.ActivityDoiMatKhau"
             android:exported="false" />
         <activity
-            android:name="com.example.PH64473_SV_MOB2041.activity.ActivityThongKeSanPham"
+            android:name=".activity.ActivityThongKeKhachHang"
             android:exported="false" />
         <activity
-            android:name="com.example.PH64473_SV_MOB2041.activity.ActivityThongKeDoanhThu"
+            android:name=".activity.ActivityThongKeSanPham"
             android:exported="false" />
         <activity
-            android:name="com.example.PH64473_SV_MOB2041.activity.ActivityNhanVien"
+            android:name=".activity.ActivityThongKeDoanhThu"
             android:exported="false" />
         <activity
-            android:name="com.example.PH64473_SV_MOB2041.activity.ActivityKhachHang"
+            android:name=".activity.ActivityNhanVien"
             android:exported="false" />
         <activity
-            android:name="com.example.PH64473_SV_MOB2041.activity.ActivityHoaDon"
+            android:name=".activity.ActivityKhachHang"
             android:exported="false" />
         <activity
-            android:name="com.example.PH64473_SV_MOB2041.activity.ActivityGioHang"
+            android:name=".activity.ActivityHoaDon"
             android:exported="false" />
         <activity
-            android:name="com.example.PH64473_SV_MOB2041.activity.ActivitySanPham"
+            android:name=".activity.ActivityGioHang"
             android:exported="false" />
         <activity
-            android:name="com.example.PH64473_SV_MOB2041.activity.ActivityDanhMuc"
+            android:name=".activity.ActivitySanPham"
             android:exported="false" />
         <activity
-            android:name="com.example.PH64473_SV_MOB2041.MainActivity"
+            android:name=".activity.ActivityDanhMuc"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,10 +51,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.PH64473_SV_MOB2041.activity.ActivityManHinhChinh"
+            android:name=".activity.ActivityManHinhChinh"
             android:exported="false" />
         <activity
-            android:name="com.example.PH64473_SV_MOB2041.activity.ActivityDangNhap"
+            android:name=".activity.ActivityDangNhap"
             android:exported="false" />
     </application>
 
