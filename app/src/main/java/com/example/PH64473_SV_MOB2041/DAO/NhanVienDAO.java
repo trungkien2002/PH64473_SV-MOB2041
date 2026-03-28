@@ -24,11 +24,12 @@ public class NhanVienDAO {
             cursor.moveToFirst();
             do {
                 list.add(new NhanVien(
-                        cursor.getString(0), // maNV
-                        cursor.getString(1), // hoTen
-                        cursor.getString(2), // matKhau
-                        cursor.getString(3), // sdt
-                        cursor.getString(4)  // loaiTaiKhoan
+                        cursor.getString(0), // MaNhanVien
+                        cursor.getString(1), // TenNhanVien
+                        cursor.getString(2), // DiaChi
+                        cursor.getString(3), // ChucVu
+                        cursor.getDouble(4), // Luong
+                        cursor.getString(5)  // MatKhau
                 ));
             } while (cursor.moveToNext());
         }
@@ -39,11 +40,12 @@ public class NhanVienDAO {
     public boolean insert(NhanVien nv) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("maNV", nv.getMaNV());
-        values.put("hoTen", nv.getHoTen());
-        values.put("matKhau", nv.getMatKhau());
-        values.put("sdt", nv.getSdt());
-        values.put("loaiTaiKhoan", nv.getLoaiTaiKhoan());
+        values.put("MaNhanVien", nv.getMaNhanVien());
+        values.put("TenNhanVien", nv.getTenNhanVien());
+        values.put("DiaChi", nv.getDiaChi());
+        values.put("ChucVu", nv.getChucVu());
+        values.put("Luong", nv.getLuong());
+        values.put("MatKhau", nv.getMatKhau());
         long check = db.insert("NhanVien", null, values);
         return check != -1;
     }
@@ -51,24 +53,24 @@ public class NhanVienDAO {
     public boolean update(NhanVien nv) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("hoTen", nv.getHoTen());
-        values.put("matKhau", nv.getMatKhau());
-        values.put("sdt", nv.getSdt());
-        values.put("loaiTaiKhoan", nv.getLoaiTaiKhoan());
-        long check = db.update("NhanVien", values, "maNV=?", new String[]{nv.getMaNV()});
+        values.put("TenNhanVien", nv.getTenNhanVien());
+        values.put("DiaChi", nv.getDiaChi());
+        values.put("ChucVu", nv.getChucVu());
+        values.put("Luong", nv.getLuong());
+        values.put("MatKhau", nv.getMatKhau());
+        long check = db.update("NhanVien", values, "MaNhanVien=?", new String[]{nv.getMaNhanVien()});
         return check != -1;
     }
 
     public boolean delete(String maNV) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        long check = db.delete("NhanVien", "maNV=?", new String[]{maNV});
+        long check = db.delete("NhanVien", "MaNhanVien=?", new String[]{maNV});
         return check != -1;
     }
 
-    // Chức năng kiểm tra đăng nhập
     public boolean checkLogin(String user, String pass) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM NhanVien WHERE maNV=? AND matKhau=?", new String[]{user, pass});
+        Cursor cursor = db.rawQuery("SELECT * FROM NhanVien WHERE MaNhanVien=? AND MatKhau=?", new String[]{user, pass});
         boolean result = cursor.getCount() > 0;
         cursor.close();
         return result;

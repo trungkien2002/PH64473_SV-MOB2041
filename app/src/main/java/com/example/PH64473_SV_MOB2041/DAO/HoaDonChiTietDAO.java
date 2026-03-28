@@ -16,29 +16,40 @@ public class HoaDonChiTietDAO {
         dbHelper = new DbHelper(context);
     }
 
-    // Lấy danh sách chi tiết hóa đơn theo mã hóa đơn
-    public List<HoaDonChiTiet> getAllByMaHD(String maHD) {
+    public List<HoaDonChiTiet> getAll() {
         List<HoaDonChiTiet> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        
-        // Query join với bảng SanPham để lấy tên sản phẩm hiển thị
-        String sql = "SELECT ct.maCTHD, ct.maHD, ct.maSP, ct.soLuong, ct.donGia, sp.tenSP " +
-                     "FROM ChiTietHoaDon ct " +
-                     "JOIN SanPham sp ON ct.maSP = sp.maSP " +
-                     "WHERE ct.maHD = ?";
-                     
-        Cursor cursor = db.rawQuery(sql, new String[]{maHD});
+        Cursor cursor = db.rawQuery("SELECT * FROM HoaDonChiTiet", null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
-                HoaDonChiTiet ct = new HoaDonChiTiet();
-                ct.setMaCTHD(cursor.getInt(0));
-                ct.setMaHD(cursor.getString(1));
-                ct.setMaSP(cursor.getString(2));
-                ct.setSoLuong(cursor.getInt(3));
-                ct.setDonGia(cursor.getDouble(4));
-                ct.setTenSP(cursor.getString(5));
-                list.add(ct);
+                list.add(new HoaDonChiTiet(
+                        cursor.getString(0), // MaChiTietHoaDon
+                        cursor.getString(1), // MaHoaDon
+                        cursor.getString(2), // MaSanPham
+                        cursor.getInt(3),    // SoLuong
+                        cursor.getDouble(4)  // DonGia
+                ));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
+
+    public List<HoaDonChiTiet> getAllByMaHD(String maHD) {
+        List<HoaDonChiTiet> list = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM HoaDonChiTiet WHERE MaHoaDon=?", new String[]{maHD});
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                list.add(new HoaDonChiTiet(
+                        cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getInt(3),
+                        cursor.getDouble(4)
+                ));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -48,33 +59,29 @@ public class HoaDonChiTietDAO {
     public boolean insert(HoaDonChiTiet ct) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("maHD", ct.getMaHD());
-        values.put("maSP", ct.getMaSP());
-        values.put("soLuong", ct.getSoLuong());
-        values.put("donGia", ct.getDonGia());
-        long check = db.insert("ChiTietHoaDon", null, values);
+        values.put("MaChiTietHoaDon", ct.getMaChiTietHoaDon());
+        values.put("MaHoaDon", ct.getMaHoaDon());
+        values.put("MaSanPham", ct.getMaSanPham());
+        values.put("SoLuong", ct.getSoLuong());
+        values.put("DonGia", ct.getDonGia());
+        long check = db.insert("HoaDonChiTiet", null, values);
         return check != -1;
     }
 
     public boolean update(HoaDonChiTiet ct) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("soLuong", ct.getSoLuong());
-        values.put("donGia", ct.getDonGia());
-        long check = db.update("ChiTietHoaDon", values, "maCTHD=?", new String[]{String.valueOf(ct.getMaCTHD())});
+        values.put("MaHoaDon", ct.getMaHoaDon());
+        values.put("MaSanPham", ct.getMaSanPham());
+        values.put("SoLuong", ct.getSoLuong());
+        values.put("DonGia", ct.getDonGia());
+        long check = db.update("HoaDonChiTiet", values, "MaChiTietHoaDon=?", new String[]{ct.getMaChiTietHoaDon()});
         return check != -1;
     }
 
-    public boolean delete(int maCTHD) {
+    public boolean delete(String maCTHD) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        long check = db.delete("ChiTietHoaDon", "maCTHD=?", new String[]{String.valueOf(maCTHD)});
-        return check != -1;
-    }
-    
-    // Xóa tất cả chi tiết của một hóa đơn (khi xóa hóa đơn)
-    public boolean deleteAllByMaHD(String maHD) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        long check = db.delete("ChiTietHoaDon", "maHD=?", new String[]{maHD});
+        long check = db.delete("HoaDonChiTiet", "MaChiTietHoaDon=?", new String[]{maCTHD});
         return check != -1;
     }
 }

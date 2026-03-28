@@ -24,10 +24,13 @@ public class SanPhamDAO {
             cursor.moveToFirst();
             do {
                 list.add(new SanPham(
-                        cursor.getString(0), // maSP
-                        cursor.getString(1), // tenSP
-                        cursor.getDouble(2), // giaBan
-                        cursor.getInt(3)    // soLuong
+                        cursor.getString(0), // MaSanPham
+                        cursor.getString(1), // MaDanhMuc
+                        cursor.getString(2), // TenSanPham
+                        cursor.getDouble(3), // DonGia
+                        cursor.getInt(4),    // SoLuongTonKho
+                        cursor.getString(5), // DonViTinh
+                        cursor.getString(6)  // NgayNhap
                 ));
             } while (cursor.moveToNext());
         }
@@ -38,11 +41,13 @@ public class SanPhamDAO {
     public boolean insert(SanPham sp) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("maSP", sp.getMaSP());
-        values.put("tenSP", sp.getTenSP());
-        values.put("giaBan", sp.getGiaBan());
-        values.put("soLuong", sp.getSoLuong());
-        // maDM can be added if your model has it, or pass as extra parameter
+        values.put("MaSanPham", sp.getMaSanPham());
+        values.put("MaDanhMuc", sp.getMaDanhMuc());
+        values.put("TenSanPham", sp.getTenSanPham());
+        values.put("DonGia", sp.getDonGia());
+        values.put("SoLuongTonKho", sp.getSoLuongTonKho());
+        values.put("DonViTinh", sp.getDonViTinh());
+        values.put("NgayNhap", sp.getNgayNhap());
         long check = db.insert("SanPham", null, values);
         return check != -1;
     }
@@ -50,16 +55,19 @@ public class SanPhamDAO {
     public boolean update(SanPham sp) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("tenSP", sp.getTenSP());
-        values.put("giaBan", sp.getGiaBan());
-        values.put("soLuong", sp.getSoLuong());
-        long check = db.update("SanPham", values, "maSP=?", new String[]{sp.getMaSP()});
+        values.put("MaDanhMuc", sp.getMaDanhMuc());
+        values.put("TenSanPham", sp.getTenSanPham());
+        values.put("DonGia", sp.getDonGia());
+        values.put("SoLuongTonKho", sp.getSoLuongTonKho());
+        values.put("DonViTinh", sp.getDonViTinh());
+        values.put("NgayNhap", sp.getNgayNhap());
+        long check = db.update("SanPham", values, "MaSanPham=?", new String[]{sp.getMaSanPham()});
         return check != -1;
     }
 
     public boolean delete(String maSP) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        long check = db.delete("SanPham", "maSP=?", new String[]{maSP});
+        long check = db.delete("SanPham", "MaSanPham=?", new String[]{maSP});
         return check != -1;
     }
 }

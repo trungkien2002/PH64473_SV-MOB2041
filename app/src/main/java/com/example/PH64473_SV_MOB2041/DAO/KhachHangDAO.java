@@ -24,9 +24,11 @@ public class KhachHangDAO {
             cursor.moveToFirst();
             do {
                 list.add(new KhachHang(
-                        cursor.getString(0), // maKH
-                        cursor.getString(1), // tenKH
-                        cursor.getString(2)  // sdt
+                        cursor.getString(0), // MaKhachHang
+                        cursor.getString(1), // TenKhachHang
+                        cursor.getString(2), // DiaChi
+                        cursor.getString(3), // SoDienThoai
+                        cursor.getString(4)  // Email
                 ));
             } while (cursor.moveToNext());
         }
@@ -37,9 +39,11 @@ public class KhachHangDAO {
     public boolean insert(KhachHang kh) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("maKH", kh.getMaKH());
-        values.put("tenKH", kh.getTenKH());
-        values.put("sdt", kh.getSdt());
+        values.put("MaKhachHang", kh.getMaKhachHang());
+        values.put("TenKhachHang", kh.getTenKhachHang());
+        values.put("DiaChi", kh.getDiaChi());
+        values.put("SoDienThoai", kh.getSoDienThoai());
+        values.put("Email", kh.getEmail());
         long check = db.insert("KhachHang", null, values);
         return check != -1;
     }
@@ -47,15 +51,17 @@ public class KhachHangDAO {
     public boolean update(KhachHang kh) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("tenKH", kh.getTenKH());
-        values.put("sdt", kh.getSdt());
-        long check = db.update("KhachHang", values, "maKH=?", new String[]{kh.getMaKH()});
+        values.put("TenKhachHang", kh.getTenKhachHang());
+        values.put("DiaChi", kh.getDiaChi());
+        values.put("SoDienThoai", kh.getSoDienThoai());
+        values.put("Email", kh.getEmail());
+        long check = db.update("KhachHang", values, "MaKhachHang=?", new String[]{kh.getMaKhachHang()});
         return check != -1;
     }
 
     public boolean delete(String maKH) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        long check = db.delete("KhachHang", "maKH=?", new String[]{maKH});
+        long check = db.delete("KhachHang", "MaKhachHang=?", new String[]{maKH});
         return check != -1;
     }
 }

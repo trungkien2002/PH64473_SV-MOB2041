@@ -3,12 +3,15 @@ package com.example.PH64473_SV_MOB2041.model;
 public class DanhMuc {
     private String maDanhMuc;
     private String tenDanhMuc;
-    private String ngayTaoDanhMuc;
+    private String ngayTao;
 
-    public DanhMuc(String maDanhMuc, String tenDanhMuc, String ngayTaoDanhMuc) {
+    public DanhMuc() {
+    }
+
+    public DanhMuc(String maDanhMuc, String tenDanhMuc, String ngayTao) {
         this.maDanhMuc = maDanhMuc;
         this.tenDanhMuc = tenDanhMuc;
-        this.ngayTaoDanhMuc = ngayTaoDanhMuc;
+        this.ngayTao = ngayTao;
     }
 
     public String getMaDanhMuc() {
@@ -27,11 +30,11 @@ public class DanhMuc {
         this.tenDanhMuc = tenDanhMuc;
     }
 
-    public String getNgayTaoDanhMuc() {
-        return ngayTaoDanhMuc;
+    public String getNgayTao() {
+        return ngayTao;
     }
 
-    public void setNgayTaoDanhMuc(String ngayTaoDanhMuc) {
-        this.ngayTaoDanhMuc = ngayTaoDanhMuc;
+    public void setNgayTao(String ngayTao) {
+        this.ngayTao = ngayTao;
     }
 }

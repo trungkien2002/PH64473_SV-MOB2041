@@ -19,18 +19,16 @@ public class HoaDonDAO {
     public List<HoaDon> getAll() {
         List<HoaDon> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        // Câu truy vấn join để lấy tên nhân viên và khách hàng nếu cần, 
-        // nhưng ở đây ta lấy theo model đơn giản trước.
-        Cursor cursor = db.rawQuery("SELECT maHD, maNV, maKH, ngayLap, tongTien FROM HoaDon", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM HoaDon", null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
                 list.add(new HoaDon(
-                        cursor.getString(0), // maHD
-                        cursor.getString(1), // tenNV (tạm thời để maNV)
-                        cursor.getString(2), // tenKH (tạm thời để maKH)
-                        cursor.getString(3), // ngayLap
-                        cursor.getDouble(4)  // tongTien
+                        cursor.getString(0), // MaHoaDon
+                        cursor.getString(1), // MaNhanVien
+                        cursor.getString(2), // MaKhachHang
+                        cursor.getString(3), // NgayLap
+                        cursor.getInt(4)     // TongTien
                 ));
             } while (cursor.moveToNext());
         }
@@ -41,11 +39,11 @@ public class HoaDonDAO {
     public boolean insert(HoaDon hd) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("maHD", hd.getMaHD());
-        values.put("maNV", hd.getTenNV()); // Lưu mã NV vào cột maNV
-        values.put("maKH", hd.getTenKH()); // Lưu mã KH vào cột maKH
-        values.put("ngayLap", hd.getNgayLap());
-        values.put("tongTien", hd.getTongTien());
+        values.put("MaHoaDon", hd.getMaHoaDon());
+        values.put("MaNhanVien", hd.getMaNhanVien());
+        values.put("MaKhachHang", hd.getMaKhachHang());
+        values.put("NgayLap", hd.getNgayLap());
+        values.put("TongTien", hd.getTongTien());
         long check = db.insert("HoaDon", null, values);
         return check != -1;
     }
@@ -53,15 +51,17 @@ public class HoaDonDAO {
     public boolean update(HoaDon hd) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("ngayLap", hd.getNgayLap());
-        values.put("tongTien", hd.getTongTien());
-        long check = db.update("HoaDon", values, "maHD=?", new String[]{hd.getMaHD()});
+        values.put("MaNhanVien", hd.getMaNhanVien());
+        values.put("MaKhachHang", hd.getMaKhachHang());
+        values.put("NgayLap", hd.getNgayLap());
+        values.put("TongTien", hd.getTongTien());
+        long check = db.update("HoaDon", values, "MaHoaDon=?", new String[]{hd.getMaHoaDon()});
         return check != -1;
     }
 
     public boolean delete(String maHD) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        long check = db.delete("HoaDon", "maHD=?", new String[]{maHD});
+        long check = db.delete("HoaDon", "MaHoaDon=?", new String[]{maHD});
         return check != -1;
     }
 }

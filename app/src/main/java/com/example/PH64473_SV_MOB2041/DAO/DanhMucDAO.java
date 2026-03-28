@@ -23,7 +23,11 @@ public class DanhMucDAO {
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
-                list.add(new DanhMuc(cursor.getString(0), cursor.getString(1), cursor.getString(2)));
+                list.add(new DanhMuc(
+                        cursor.getString(0), // MaDanhMuc
+                        cursor.getString(1), // TenDanhMuc
+                        cursor.getString(2)  // NgayTao
+                ));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -33,9 +37,9 @@ public class DanhMucDAO {
     public boolean insert(DanhMuc dm) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("maDanhMuc", dm.getMaDanhMuc());
-        values.put("tenDanhMuc", dm.getTenDanhMuc());
-        values.put("ngayTaoDanhMuc", dm.getNgayTaoDanhMuc());
+        values.put("MaDanhMuc", dm.getMaDanhMuc());
+        values.put("TenDanhMuc", dm.getTenDanhMuc());
+        values.put("NgayTao", dm.getNgayTao());
         long check = db.insert("DanhMuc", null, values);
         return check != -1;
     }
@@ -43,15 +47,15 @@ public class DanhMucDAO {
     public boolean update(DanhMuc dm) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("tenDanhMuc", dm.getTenDanhMuc());
-        values.put("ngayTaoDanhMuc", dm.getNgayTaoDanhMuc());
-        long check = db.update("DanhMuc", values, "maDanhMuc=?", new String[]{dm.getMaDanhMuc()});
+        values.put("TenDanhMuc", dm.getTenDanhMuc());
+        values.put("NgayTao", dm.getNgayTao());
+        long check = db.update("DanhMuc", values, "MaDanhMuc=?", new String[]{dm.getMaDanhMuc()});
         return check != -1;
     }
 
     public boolean delete(String maDM) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        long check = db.delete("DanhMuc", "maDanhMuc=?", new String[]{maDM});
+        long check = db.delete("DanhMuc", "MaDanhMuc=?", new String[]{maDM});
         return check != -1;
     }
 }

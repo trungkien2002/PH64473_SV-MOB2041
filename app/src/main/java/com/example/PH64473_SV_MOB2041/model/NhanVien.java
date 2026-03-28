@@ -1,31 +1,35 @@
 package com.example.PH64473_SV_MOB2041.model;
 
 public class NhanVien {
-    private String maNV;
-    private String hoTen;
+    private String maNhanVien;
+    private String tenNhanVien;
+    private String diaChi;
+    private String chucVu;
+    private double luong;
     private String matKhau;
-    private String sdt;
-    private String loaiTaiKhoan;
 
     public NhanVien() {
     }
 
-    public NhanVien(String maNV, String hoTen, String matKhau, String sdt, String loaiTaiKhoan) {
-        this.maNV = maNV;
-        this.hoTen = hoTen;
+    public NhanVien(String maNhanVien, String tenNhanVien, String diaChi, String chucVu, double luong, String matKhau) {
+        this.maNhanVien = maNhanVien;
+        this.tenNhanVien = tenNhanVien;
+        this.diaChi = diaChi;
+        this.chucVu = chucVu;
+        this.luong = luong;
         this.matKhau = matKhau;
-        this.sdt = sdt;
-        this.loaiTaiKhoan = loaiTaiKhoan;
     }
 
-    public String getMaNV() { return maNV; }
-    public void setMaNV(String maNV) { this.maNV = maNV; }
-    public String getHoTen() { return hoTen; }
-    public void setHoTen(String hoTen) { this.hoTen = hoTen; }
+    public String getMaNhanVien() { return maNhanVien; }
+    public void setMaNhanVien(String maNhanVien) { this.maNhanVien = maNhanVien; }
+    public String getTenNhanVien() { return tenNhanVien; }
+    public void setTenNhanVien(String tenNhanVien) { this.tenNhanVien = tenNhanVien; }
+    public String getDiaChi() { return diaChi; }
+    public void setDiaChi(String diaChi) { this.diaChi = diaChi; }
+    public String getChucVu() { return chucVu; }
+    public void setChucVu(String chucVu) { this.chucVu = chucVu; }
+    public double getLuong() { return luong; }
+    public void setLuong(double luong) { this.luong = luong; }
     public String getMatKhau() { return matKhau; }
     public void setMatKhau(String matKhau) { this.matKhau = matKhau; }
-    public String getSdt() { return sdt; }
-    public void setSdt(String sdt) { this.sdt = sdt; }
-    public String getLoaiTaiKhoan() { return loaiTaiKhoan; }
-    public void setLoaiTaiKhoan(String loaiTaiKhoan) { this.loaiTaiKhoan = loaiTaiKhoan; }
 }

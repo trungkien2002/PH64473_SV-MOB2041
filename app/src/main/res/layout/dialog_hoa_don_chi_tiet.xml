@@ -144,7 +144,7 @@
             android:id="@+id/rcv_SanPhamHoaDonChiTiet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/item_san_pham"/>
+            tools:listitem="@layout/item_hoa_don_chi_tiet"/>
     </ScrollView>
 
 
