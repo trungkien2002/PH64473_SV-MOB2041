@@ -15,25 +15,23 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.PH64473_SV_MOB2041.DAO.SanPhamDAO;
 import com.example.PH64473_SV_MOB2041.R;
+import com.example.PH64473_SV_MOB2041.model.SanPham;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityThongKeSanPham extends AppCompatActivity {
 
     private RecyclerView rcvThongKeSanPham;
-
-    static class ThongKeSP {
-        String ten;
-        int soLuong;
-        ThongKeSP(String ten, int soLuong) { this.ten = ten; this.soLuong = soLuong; }
-    }
+    private SanPhamDAO sanPhamDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thong_ke_san_pham);
+
+        sanPhamDAO = new SanPhamDAO(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -43,12 +41,14 @@ public class ActivityThongKeSanPham extends AppCompatActivity {
             toolbar.setNavigationOnClickListener(v -> finish());
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
+        View mainView = findViewById(R.id.main);
+        if (mainView != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
+                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+                return insets;
+            });
+        }
 
         rcvThongKeSanPham = findViewById(R.id.rcv_ThongKeSanPham);
         rcvThongKeSanPham.setLayoutManager(new LinearLayoutManager(this));
@@ -56,10 +56,11 @@ public class ActivityThongKeSanPham extends AppCompatActivity {
         setupDatePicker(findViewById(R.id.edt_TuNgay));
         setupDatePicker(findViewById(R.id.edt_DenNgay));
 
-        setupDemoData();
+        loadData();
     }
 
     private void setupDatePicker(EditText editText) {
+        if (editText == null) return;
         editText.setOnClickListener(v -> {
             java.util.Calendar calendar = java.util.Calendar.getInstance();
             new android.app.DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
@@ -69,13 +70,8 @@ public class ActivityThongKeSanPham extends AppCompatActivity {
         });
     }
 
-    private void setupDemoData() {
-        List<ThongKeSP> list = new ArrayList<>();
-        list.add(new ThongKeSP("Trà xanh Ito En", 150));
-        list.add(new ThongKeSP("Bánh Pocky", 120));
-        list.add(new ThongKeSP("Mì Udon", 95));
-        list.add(new ThongKeSP("Nước ngọt Coca", 80));
-        list.add(new ThongKeSP("Snack Khoai tây", 60));
+    private void loadData() {
+        List<SanPham> list = sanPhamDAO.getAll();
 
         rcvThongKeSanPham.setAdapter(new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             @NonNull
@@ -87,11 +83,11 @@ public class ActivityThongKeSanPham extends AppCompatActivity {
 
             @Override
             public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-                ThongKeSP item = list.get(position);
+                SanPham item = list.get(position);
                 TextView tvTen = holder.itemView.findViewById(R.id.tv_TenSanPham);
                 TextView tvSoLuong = holder.itemView.findViewById(R.id.tv_SoLuongDaBan);
-                tvTen.setText(item.ten);
-                tvSoLuong.setText(String.valueOf(item.soLuong));
+                tvTen.setText(item.getTenSanPham());
+                tvSoLuong.setText(String.valueOf(item.getSoLuongTonKho())); // Tạm thời dùng tồn kho
             }
 
             @Override

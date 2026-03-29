@@ -13,12 +13,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.PH64473_SV_MOB2041.DAO.NhanVienDAO;
 import com.example.PH64473_SV_MOB2041.R;
+import com.example.PH64473_SV_MOB2041.model.NhanVien;
+
+import java.util.List;
 
 public class ActivityDangNhap extends AppCompatActivity {
 
     private EditText edtTenTaiKhoan, edtMatKhau;
     private Button btnDangNhap;
+    private NhanVienDAO nhanVienDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,8 @@ public class ActivityDangNhap extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_dang_nhap);
         
+        nhanVienDAO = new NhanVienDAO(this);
+
         View mainView = findViewById(R.id.main_login);
         if (mainView != null) {
             ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
@@ -50,16 +57,20 @@ public class ActivityDangNhap extends AppCompatActivity {
                     return;
                 }
 
-                // Giả lập logic đăng nhập và phân quyền
-                // Admin: admin/admin
-                // Nhân viên: nv/nv
-                Intent intent = new Intent(ActivityDangNhap.this, ActivityManHinhChinh.class);
-                if (user.equals("admin") && pass.equals("admin")) {
-                    intent.putExtra("ROLE", "admin");
-                    startActivity(intent);
-                    finish();
-                } else if (user.equals("nv") && pass.equals("nv")) {
-                    intent.putExtra("ROLE", "nhanvien");
+                // Kiểm tra đăng nhập từ Database thực tế
+                if (nhanVienDAO.checkLogin(user, pass)) {
+                    // Lấy thông tin nhân viên để biết chức vụ (Role)
+                    String role = "nhanvien"; // Mặc định
+                    List<NhanVien> list = nhanVienDAO.getAll();
+                    for (NhanVien nv : list) {
+                        if (nv.getMaNhanVien().equals(user)) {
+                            role = nv.getChucVu().equals("Quản lý") ? "admin" : "nhanvien";
+                            break;
+                        }
+                    }
+
+                    Intent intent = new Intent(ActivityDangNhap.this, ActivityManHinhChinh.class);
+                    intent.putExtra("ROLE", role);
                     startActivity(intent);
                     finish();
                 } else {

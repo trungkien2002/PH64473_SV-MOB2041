@@ -14,10 +14,10 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.PH64473_SV_MOB2041.DAO.SanPhamDAO;
 import com.example.PH64473_SV_MOB2041.R;
 import com.example.PH64473_SV_MOB2041.model.SanPham;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -26,11 +26,14 @@ public class ActivityGioHang extends AppCompatActivity {
     private RecyclerView rvGioHang;
     private TextView tvTongTien;
     private Toolbar toolbar;
+    private SanPhamDAO sanPhamDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gio_hang);
+
+        sanPhamDAO = new SanPhamDAO(this);
 
         View mainView = findViewById(R.id.main);
         if (mainView != null) {
@@ -54,20 +57,16 @@ public class ActivityGioHang extends AppCompatActivity {
 
         rvGioHang.setLayoutManager(new LinearLayoutManager(this));
 
-        setupDemoCart();
+        loadData();
     }
 
-    private void setupDemoCart() {
-        List<SanPham> cartList = new ArrayList<>();
-        cartList.add(new SanPham("SP001", "Trà xanh Ito En", 10000, 2));
-        cartList.add(new SanPham("SP002", "Bánh Pocky", 25000, 1));
-        cartList.add(new SanPham("SP003", "Mì Udon", 5000, 4));
-        cartList.add(new SanPham("SP004", "Nước ngọt Coca", 15000, 3));
-        cartList.add(new SanPham("SP005", "Snack Khoai tây", 12000, 5));
+    private void loadData() {
+        // Lấy dữ liệu từ Database thay vì demo
+        List<SanPham> cartList = sanPhamDAO.getAll();
 
         double total = 0;
         for (SanPham sp : cartList) {
-            total += sp.getGiaBan() * sp.getSoLuong();
+            total += sp.getDonGia(); // Tạm tính tổng theo đơn giá các sản phẩm trong DB
         }
         tvTongTien.setText(String.format(Locale.getDefault(), "%,.0f đ", total));
 
@@ -86,9 +85,9 @@ public class ActivityGioHang extends AppCompatActivity {
                 TextView tvGia = holder.itemView.findViewById(R.id.tv_GiaSanPham);
                 TextView tvSoLuong = holder.itemView.findViewById(R.id.tv_SoLuong);
 
-                tvTen.setText(sp.getTenSP());
-                tvGia.setText(String.format(Locale.getDefault(), "%,.0f đ", sp.getGiaBan()));
-                tvSoLuong.setText(String.valueOf(sp.getSoLuong()));
+                tvTen.setText(sp.getTenSanPham());
+                tvGia.setText(String.format(Locale.getDefault(), "%,.0f đ", sp.getDonGia()));
+                tvSoLuong.setText("1"); // Giả định số lượng là 1 để hiển thị UI
             }
 
             @Override

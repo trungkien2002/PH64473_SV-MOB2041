@@ -17,10 +17,10 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.PH64473_SV_MOB2041.DAO.SanPhamDAO;
 import com.example.PH64473_SV_MOB2041.R;
 import com.example.PH64473_SV_MOB2041.model.SanPham;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ActivitySanPham extends AppCompatActivity {
@@ -28,11 +28,15 @@ public class ActivitySanPham extends AppCompatActivity {
     private RecyclerView rcvSanPham;
     private Toolbar toolbar;
     private ImageView imgGioHang;
+    private SanPhamDAO sanPhamDAO;
+    private List<SanPham> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_san_pham);
+
+        sanPhamDAO = new SanPhamDAO(this);
 
         View mainView = findViewById(R.id.main);
         if (mainView != null) {
@@ -60,17 +64,11 @@ public class ActivitySanPham extends AppCompatActivity {
         rcvSanPham = findViewById(R.id.rcv_SanPham);
         rcvSanPham.setLayoutManager(new LinearLayoutManager(this));
 
-        setupDemoData();
+        loadData();
     }
 
-    private void setupDemoData() {
-        List<SanPham> list = new ArrayList<>();
-        list.add(new SanPham("SP001", "Trà xanh Ito En", 10000, 50));
-        list.add(new SanPham("SP002", "Bánh Pocky", 25000, 30));
-        list.add(new SanPham("SP003", "Mì Udon", 5000, 100));
-        list.add(new SanPham("SP004", "Nước ngọt Coca", 15000, 20));
-        list.add(new SanPham("SP005", "Snack Khoai tây", 12000, 45));
-
+    private void loadData() {
+        list = sanPhamDAO.getAll();
         rcvSanPham.setAdapter(new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             @NonNull
             @Override
@@ -86,14 +84,18 @@ public class ActivitySanPham extends AppCompatActivity {
                 TextView tvGia = holder.itemView.findViewById(R.id.tv_GiaSanPham);
                 TextView tvTonKho = holder.itemView.findViewById(R.id.tv_NgayTao);
 
-                tvTen.setText(sp.getTenSP());
-                tvGia.setText(String.format("%,.0f đ", sp.getGiaBan()));
-                tvTonKho.setText(String.valueOf(sp.getSoLuong()));
+                tvTen.setText(sp.getTenSanPham());
+                tvGia.setText(String.format("%,.0f đ", sp.getDonGia()));
+                tvTonKho.setText("Tồn kho: " + sp.getSoLuongTonKho());
 
                 holder.itemView.findViewById(R.id.btn_Edit).setOnClickListener(v -> 
-                    Toast.makeText(ActivitySanPham.this, "Sửa: " + sp.getTenSP(), Toast.LENGTH_SHORT).show());
-                holder.itemView.findViewById(R.id.btn_Delete).setOnClickListener(v -> 
-                    Toast.makeText(ActivitySanPham.this, "Xóa: " + sp.getTenSP(), Toast.LENGTH_SHORT).show());
+                    Toast.makeText(ActivitySanPham.this, "Sửa: " + sp.getTenSanPham(), Toast.LENGTH_SHORT).show());
+                holder.itemView.findViewById(R.id.btn_Delete).setOnClickListener(v -> {
+                    if (sanPhamDAO.delete(sp.getMaSanPham())) {
+                        Toast.makeText(ActivitySanPham.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                        loadData();
+                    }
+                });
             }
 
             @Override

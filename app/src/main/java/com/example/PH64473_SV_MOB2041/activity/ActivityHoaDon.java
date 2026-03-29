@@ -14,21 +14,24 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.PH64473_SV_MOB2041.DAO.HoaDonDAO;
 import com.example.PH64473_SV_MOB2041.R;
 import com.example.PH64473_SV_MOB2041.model.HoaDon;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class ActivityHoaDon extends AppCompatActivity {
 
     private RecyclerView rvHoaDon;
+    private HoaDonDAO hoaDonDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hoa_don);
+
+        hoaDonDAO = new HoaDonDAO(this);
 
         View mainView = findViewById(R.id.main);
         if (mainView != null) {
@@ -50,16 +53,11 @@ public class ActivityHoaDon extends AppCompatActivity {
         rvHoaDon = findViewById(R.id.rv_HoaDon);
         rvHoaDon.setLayoutManager(new LinearLayoutManager(this));
 
-        setupDemoData();
+        loadData();
     }
 
-    private void setupDemoData() {
-        List<HoaDon> list = new ArrayList<>();
-        list.add(new HoaDon("HD001", "Admin", "Nguyễn Văn An", "2024-05-01", 150000));
-        list.add(new HoaDon("HD002", "Nhân viên A", "Trần Thị Bình", "2024-05-02", 250000));
-        list.add(new HoaDon("HD003", "Admin", "Lê Văn Cường", "2024-05-03", 50000));
-        list.add(new HoaDon("HD004", "Nhân viên B", "Phạm Minh Đức", "2024-05-04", 450000));
-        list.add(new HoaDon("HD005", "Admin", "Hoàng Kim Yến", "2024-05-05", 120000));
+    private void loadData() {
+        List<HoaDon> list = hoaDonDAO.getAll();
 
         rvHoaDon.setAdapter(new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             @NonNull
@@ -72,11 +70,11 @@ public class ActivityHoaDon extends AppCompatActivity {
             @Override
             public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
                 HoaDon hd = list.get(position);
-                ((TextView) holder.itemView.findViewById(R.id.tv_MaHD)).setText(hd.getMaHD());
-                ((TextView) holder.itemView.findViewById(R.id.tv_TenNV)).setText(hd.getTenNV());
-                ((TextView) holder.itemView.findViewById(R.id.tv_TenKH)).setText(hd.getTenKH());
+                ((TextView) holder.itemView.findViewById(R.id.tv_MaHD)).setText(hd.getMaHoaDon());
+                ((TextView) holder.itemView.findViewById(R.id.tv_TenNV)).setText(hd.getMaNhanVien());
+                ((TextView) holder.itemView.findViewById(R.id.tv_TenKH)).setText(hd.getMaKhachHang());
                 ((TextView) holder.itemView.findViewById(R.id.tv_NgayLap)).setText(hd.getNgayLap());
-                ((TextView) holder.itemView.findViewById(R.id.tv_TongTien)).setText(String.format(Locale.getDefault(), "%,.0f đ", hd.getTongTien()));
+                ((TextView) holder.itemView.findViewById(R.id.tv_TongTien)).setText(String.format(Locale.getDefault(), "%,d đ", hd.getTongTien()));
             }
 
             @Override

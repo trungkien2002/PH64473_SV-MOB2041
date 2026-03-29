@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class DbHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "PH64473_SV_MOB2041.db";
-    private static final int DB_VERSION = 3; // Tăng version để cập nhật cột mới
+    private static final int DB_VERSION = 4; // Tăng version để xóa và tạo lại bảng với dữ liệu mới
 
     public DbHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -77,10 +77,79 @@ public class DbHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(MaSanPham) REFERENCES SanPham(MaSanPham))";
         db.execSQL(createTableHoaDonChiTiet);
 
-        // Dữ liệu mẫu ban đầu
-        db.execSQL("INSERT INTO NhanVien VALUES ('admin', 'Admin', 'Hà Nội', 'Quản lý', 20000000, 'admin')");
-        db.execSQL("INSERT INTO DanhMuc VALUES ('DM01', 'Hàng tiêu dùng', '2024-05-20')");
-        db.execSQL("INSERT INTO KhachHang VALUES ('KH01', 'Nguyễn Văn A', 'HCM', '0901234567', 'a@gmail.com')");
+        // --- DỮ LIỆU MẪU (10 item mỗi bảng) ---
+
+        // 1. Nhân viên
+        db.execSQL("INSERT INTO NhanVien VALUES ('admin', 'Quản lý 1', 'Hà Nội', 'Quản lý', 20000000, 'admin')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv01', 'Nguyễn Văn A', 'Hà Nội', 'Nhân viên', 8000000, '123')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv02', 'Trần Thị B', 'Hà Nội', 'Nhân viên', 8500000, '123')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv03', 'Lê Văn C', 'Hà Nội', 'Nhân viên', 7500000, '123')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv04', 'Phạm Thị D', 'Hà Nội', 'Nhân viên', 9000000, '123')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv05', 'Hoàng Văn E', 'Hà Nội', 'Nhân viên', 8200000, '123')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv06', 'Vũ Thị F', 'Hà Nội', 'Nhân viên', 7800000, '123')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv07', 'Đặng Văn G', 'Hà Nội', 'Nhân viên', 8100000, '123')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv08', 'Bùi Thị H', 'Hà Nội', 'Nhân viên', 8400000, '123')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv09', 'Đỗ Văn I', 'Hà Nội', 'Nhân viên', 7900000, '123')");
+
+        // 2. Danh mục
+        db.execSQL("INSERT INTO DanhMuc VALUES ('DM01', 'Đồ uống Nhật', '2024-05-01')");
+        db.execSQL("INSERT INTO DanhMuc VALUES ('DM02', 'Bánh kẹo Nhật', '2024-05-02')");
+        db.execSQL("INSERT INTO DanhMuc VALUES ('DM03', 'Gia vị Nhật', '2024-05-03')");
+        db.execSQL("INSERT INTO DanhMuc VALUES ('DM04', 'Mì Nhật', '2024-05-04')");
+        db.execSQL("INSERT INTO DanhMuc VALUES ('DM05', 'Hải sản khô', '2024-05-05')");
+        db.execSQL("INSERT INTO DanhMuc VALUES ('DM06', 'Trà Nhật', '2024-05-06')");
+        db.execSQL("INSERT INTO DanhMuc VALUES ('DM07', 'Gạo Nhật', '2024-05-07')");
+        db.execSQL("INSERT INTO DanhMuc VALUES ('DM08', 'Rượu Sake', '2024-05-08')");
+        db.execSQL("INSERT INTO DanhMuc VALUES ('DM09', 'Mỹ phẩm Nhật', '2024-05-09')");
+        db.execSQL("INSERT INTO DanhMuc VALUES ('DM10', 'Đồ gia dụng', '2024-05-10')");
+
+        // 3. Sản phẩm
+        db.execSQL("INSERT INTO SanPham VALUES ('SP01', 'DM01', 'Trà xanh Ito En', 35000, 100, 'Chai', '2024-05-11')");
+        db.execSQL("INSERT INTO SanPham VALUES ('SP02', 'DM02', 'Bánh Pocky', 25000, 200, 'Hộp', '2024-05-12')");
+        db.execSQL("INSERT INTO SanPham VALUES ('SP03', 'DM03', 'Nước tương Kikkoman', 75000, 50, 'Chai', '2024-05-13')");
+        db.execSQL("INSERT INTO SanPham VALUES ('SP04', 'DM04', 'Mì Udon Nissin', 45000, 150, 'Gói', '2024-05-14')");
+        db.execSQL("INSERT INTO SanPham VALUES ('SP05', 'DM05', 'Rong biển khô', 120000, 30, 'Gói', '2024-05-15')");
+        db.execSQL("INSERT INTO SanPham VALUES ('SP06', 'DM06', 'Bột trà xanh Matcha', 150000, 20, 'Hộp', '2024-05-16')");
+        db.execSQL("INSERT INTO SanPham VALUES ('SP07', 'DM07', 'Gạo Koshihikari', 450000, 10, 'Túi 5kg', '2024-05-17')");
+        db.execSQL("INSERT INTO SanPham VALUES ('SP08', 'DM08', 'Rượu Sake Dassai', 1200000, 5, 'Chai', '2024-05-18')");
+        db.execSQL("INSERT INTO SanPham VALUES ('SP09', 'DM09', 'Sữa rửa mặt Hada Labo', 180000, 40, 'Tuýp', '2024-05-19')");
+        db.execSQL("INSERT INTO SanPham VALUES ('SP10', 'DM10', 'Dao làm bếp Nhật', 850000, 15, 'Cái', '2024-05-20')");
+
+        // 4. Khách hàng
+        db.execSQL("INSERT INTO KhachHang VALUES ('KH01', 'Nguyễn Văn An', 'Hà Nội', '0911111111', 'an@gmail.com')");
+        db.execSQL("INSERT INTO KhachHang VALUES ('KH02', 'Trần Thị Bình', 'Hải Phòng', '0922222222', 'binh@gmail.com')");
+        db.execSQL("INSERT INTO KhachHang VALUES ('KH03', 'Lê Văn Cường', 'Đà Nẵng', '0933333333', 'cuong@gmail.com')");
+        db.execSQL("INSERT INTO KhachHang VALUES ('KH04', 'Phạm Minh Đức', 'HCM', '0944444444', 'duc@gmail.com')");
+        db.execSQL("INSERT INTO KhachHang VALUES ('KH05', 'Hoàng Kim Yến', 'Cần Thơ', '0955555555', 'yen@gmail.com')");
+        db.execSQL("INSERT INTO KhachHang VALUES ('KH06', 'Vũ Anh Tuấn', 'Hải Dương', '0966666666', 'tuan@gmail.com')");
+        db.execSQL("INSERT INTO KhachHang VALUES ('KH07', 'Đặng Thu Thảo', 'Nam Định', '0977777777', 'thao@gmail.com')");
+        db.execSQL("INSERT INTO KhachHang VALUES ('KH08', 'Bùi Quang Huy', 'Quảng Ninh', '0988888888', 'huy@gmail.com')");
+        db.execSQL("INSERT INTO KhachHang VALUES ('KH09', 'Đỗ Thùy Linh', 'Thanh Hóa', '0999999999', 'linh@gmail.com')");
+        db.execSQL("INSERT INTO KhachHang VALUES ('KH10', 'Ngô Bảo Châu', 'Nghệ An', '0900000000', 'chau@gmail.com')");
+
+        // 5. Hóa đơn
+        db.execSQL("INSERT INTO HoaDon VALUES ('HD01', 'nv01', 'KH01', '2024-05-21', 105000)");
+        db.execSQL("INSERT INTO HoaDon VALUES ('HD02', 'nv02', 'KH02', '2024-05-22', 250000)");
+        db.execSQL("INSERT INTO HoaDon VALUES ('HD03', 'nv03', 'KH03', '2024-05-23', 75000)");
+        db.execSQL("INSERT INTO HoaDon VALUES ('HD04', 'nv04', 'KH04', '2024-05-24', 90000)");
+        db.execSQL("INSERT INTO HoaDon VALUES ('HD05', 'nv05', 'KH05', '2024-05-25', 120000)");
+        db.execSQL("INSERT INTO HoaDon VALUES ('HD06', 'nv01', 'KH06', '2024-05-26', 150000)");
+        db.execSQL("INSERT INTO HoaDon VALUES ('HD07', 'nv02', 'KH07', '2024-05-27', 450000)");
+        db.execSQL("INSERT INTO HoaDon VALUES ('HD08', 'nv03', 'KH08', '2024-05-28', 1200000)");
+        db.execSQL("INSERT INTO HoaDon VALUES ('HD09', 'nv04', 'KH09', '2024-05-29', 180000)");
+        db.execSQL("INSERT INTO HoaDon VALUES ('HD10', 'nv05', 'KH10', '2024-05-30', 850000)");
+
+        // 6. Hóa đơn chi tiết
+        db.execSQL("INSERT INTO HoaDonChiTiet VALUES ('CT01', 'HD01', 'SP01', 3, 35000)");
+        db.execSQL("INSERT INTO HoaDonChiTiet VALUES ('CT02', 'HD02', 'SP02', 10, 25000)");
+        db.execSQL("INSERT INTO HoaDonChiTiet VALUES ('CT03', 'HD03', 'SP03', 1, 75000)");
+        db.execSQL("INSERT INTO HoaDonChiTiet VALUES ('CT04', 'HD04', 'SP04', 2, 45000)");
+        db.execSQL("INSERT INTO HoaDonChiTiet VALUES ('CT05', 'HD05', 'SP05', 1, 120000)");
+        db.execSQL("INSERT INTO HoaDonChiTiet VALUES ('CT06', 'HD06', 'SP06', 1, 150000)");
+        db.execSQL("INSERT INTO HoaDonChiTiet VALUES ('CT07', 'HD07', 'SP07', 1, 450000)");
+        db.execSQL("INSERT INTO HoaDonChiTiet VALUES ('CT08', 'HD08', 'SP08', 1, 1200000)");
+        db.execSQL("INSERT INTO HoaDonChiTiet VALUES ('CT09', 'HD09', 'SP09', 1, 180000)");
+        db.execSQL("INSERT INTO HoaDonChiTiet VALUES ('CT10', 'HD10', 'SP10', 1, 850000)");
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,20 +15,24 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.PH64473_SV_MOB2041.DAO.KhachHangDAO;
 import com.example.PH64473_SV_MOB2041.R;
 import com.example.PH64473_SV_MOB2041.model.KhachHang;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityKhachHang extends AppCompatActivity {
 
     private RecyclerView rcvKhachHang;
+    private KhachHangDAO khachHangDAO;
+    private List<KhachHang> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_khach_hang);
+
+        khachHangDAO = new KhachHangDAO(this);
 
         View mainView = findViewById(R.id.main);
         if (mainView != null) {
@@ -46,20 +51,14 @@ public class ActivityKhachHang extends AppCompatActivity {
             toolbar.setNavigationOnClickListener(v -> finish());
         }
 
-        rcvKhachHang = findViewById(R.id.rcv_DanhMuc); // ID defined in XML
+        rcvKhachHang = findViewById(R.id.rcv_DanhMuc); // Keeping existing ID from XML
         rcvKhachHang.setLayoutManager(new LinearLayoutManager(this));
 
-        setupDemoData();
+        loadData();
     }
 
-    private void setupDemoData() {
-        List<KhachHang> list = new ArrayList<>();
-        list.add(new KhachHang("KH001", "Nguyễn Văn An", "0912345678"));
-        list.add(new KhachHang("KH002", "Trần Thị Bình", "0987654321"));
-        list.add(new KhachHang("KH003", "Lê Văn Cường", "0905123456"));
-        list.add(new KhachHang("KH004", "Phạm Minh Đức", "0934567890"));
-        list.add(new KhachHang("KH005", "Hoàng Kim Yến", "0978123456"));
-
+    private void loadData() {
+        list = khachHangDAO.getAll();
         rcvKhachHang.setAdapter(new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             @NonNull
             @Override
@@ -74,8 +73,15 @@ public class ActivityKhachHang extends AppCompatActivity {
                 TextView tvTen = holder.itemView.findViewById(R.id.tv_TenKH);
                 TextView tvSdt = holder.itemView.findViewById(R.id.tv_SdtKH);
 
-                tvTen.setText(kh.getTenKH());
-                tvSdt.setText(kh.getSdt());
+                tvTen.setText(kh.getTenKhachHang());
+                tvSdt.setText(kh.getSoDienThoai());
+
+                holder.itemView.findViewById(R.id.btn_Delete).setOnClickListener(v -> {
+                    if (khachHangDAO.delete(kh.getMaKhachHang())) {
+                        Toast.makeText(ActivityKhachHang.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                        loadData();
+                    }
+                });
             }
 
             @Override

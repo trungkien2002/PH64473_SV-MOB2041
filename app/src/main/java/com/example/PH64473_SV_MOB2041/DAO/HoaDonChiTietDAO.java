@@ -16,6 +16,7 @@ public class HoaDonChiTietDAO {
         dbHelper = new DbHelper(context);
     }
 
+    // Lấy tất cả chi tiết hóa đơn trong hệ thống
     public List<HoaDonChiTiet> getAll() {
         List<HoaDonChiTiet> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -36,6 +37,7 @@ public class HoaDonChiTietDAO {
         return list;
     }
 
+    // Lấy danh sách chi tiết của một hóa đơn cụ thể
     public List<HoaDonChiTiet> getAllByMaHD(String maHD) {
         List<HoaDonChiTiet> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -56,6 +58,7 @@ public class HoaDonChiTietDAO {
         return list;
     }
 
+    // Phương thức thêm hóa đơn chi tiết
     public boolean insert(HoaDonChiTiet ct) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -65,23 +68,6 @@ public class HoaDonChiTietDAO {
         values.put("SoLuong", ct.getSoLuong());
         values.put("DonGia", ct.getDonGia());
         long check = db.insert("HoaDonChiTiet", null, values);
-        return check != -1;
-    }
-
-    public boolean update(HoaDonChiTiet ct) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("MaHoaDon", ct.getMaHoaDon());
-        values.put("MaSanPham", ct.getMaSanPham());
-        values.put("SoLuong", ct.getSoLuong());
-        values.put("DonGia", ct.getDonGia());
-        long check = db.update("HoaDonChiTiet", values, "MaChiTietHoaDon=?", new String[]{ct.getMaChiTietHoaDon()});
-        return check != -1;
-    }
-
-    public boolean delete(String maCTHD) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        long check = db.delete("HoaDonChiTiet", "MaChiTietHoaDon=?", new String[]{maCTHD});
         return check != -1;
     }
 }
