@@ -36,6 +36,33 @@ public class KhachHangDAO {
         return list;
     }
 
+    // Hàm thống kê Top Khách hàng chi tiêu nhiều nhất
+    public List<KhachHang> getTopKhachHang() {
+        List<KhachHang> list = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        // Join KhachHang với HoaDon để tính tổng tiền (TongTien là cột trong HoaDon)
+        String sql = "SELECT kh.MaKhachHang, kh.TenKhachHang, kh.SoDienThoai, SUM(hd.TongTien) as DoanhThu " +
+                     "FROM KhachHang kh " +
+                     "JOIN HoaDon hd ON kh.MaKhachHang = hd.MaKhachHang " +
+                     "GROUP BY kh.MaKhachHang " +
+                     "ORDER BY DoanhThu DESC LIMIT 10";
+
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                KhachHang kh = new KhachHang();
+                kh.setMaKhachHang(cursor.getString(0));
+                kh.setTenKhachHang(cursor.getString(1));
+                kh.setSoDienThoai(cursor.getString(2));
+                kh.setEmail(cursor.getString(3)); // Tạm thời dùng cột Email để chứa doanh thu
+                list.add(kh);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
+
     public boolean insert(KhachHang kh) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();

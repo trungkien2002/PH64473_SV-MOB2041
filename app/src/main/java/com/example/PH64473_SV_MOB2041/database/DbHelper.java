@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class DbHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "PH64473_SV_MOB2041.db";
-    private static final int DB_VERSION = 4; // Tăng version để xóa và tạo lại bảng với dữ liệu mới
+    private static final int DB_VERSION = 4;
 
     public DbHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -77,7 +77,6 @@ public class DbHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(MaSanPham) REFERENCES SanPham(MaSanPham))";
         db.execSQL(createTableHoaDonChiTiet);
 
-        // --- DỮ LIỆU MẪU (10 item mỗi bảng) ---
 
         // 1. Nhân viên
         db.execSQL("INSERT INTO NhanVien VALUES ('admin', 'Quản lý 1', 'Hà Nội', 'Quản lý', 20000000, 'admin')");

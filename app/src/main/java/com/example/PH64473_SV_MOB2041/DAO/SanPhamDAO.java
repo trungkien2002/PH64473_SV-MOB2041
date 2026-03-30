@@ -38,6 +38,32 @@ public class SanPhamDAO {
         return list;
     }
 
+    // Hàm thống kê Top Sản Phẩm bán chạy (Lấy từ bảng HoaDonChiTiet)
+    public List<SanPham> getTopBanChay() {
+        List<SanPham> list = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        // Truy vấn join giữa SanPham và HoaDonChiTiet để tính tổng số lượng bán
+        String sql = "SELECT sp.MaSanPham, sp.TenSanPham, SUM(ct.SoLuong) as TongBan " +
+                     "FROM SanPham sp " +
+                     "JOIN HoaDonChiTiet ct ON sp.MaSanPham = ct.MaSanPham " +
+                     "GROUP BY sp.MaSanPham " +
+                     "ORDER BY TongBan DESC LIMIT 10";
+        
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                SanPham sp = new SanPham();
+                sp.setMaSanPham(cursor.getString(0));
+                sp.setTenSanPham(cursor.getString(1));
+                sp.setSoLuongTonKho(cursor.getInt(2)); // Tạm thời dùng thuộc tính này để chứa số lượng đã bán
+                list.add(sp);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
+
     public boolean insert(SanPham sp) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();

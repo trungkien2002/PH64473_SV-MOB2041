@@ -3,8 +3,10 @@ package com.example.PH64473_SV_MOB2041.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +28,8 @@ public class ActivityThongKeKhachHang extends AppCompatActivity {
 
     private RecyclerView rcvThongKeKhachHang;
     private KhachHangDAO khachHangDAO;
+    private Button btnThongKe;
+    private EditText edtTuNgay, edtDenNgay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,18 +50,25 @@ public class ActivityThongKeKhachHang extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Thống kê khách hàng");
+            getSupportActionBar().setTitle("Top khách hàng tiêu biểu");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             toolbar.setNavigationOnClickListener(v -> finish());
         }
 
+        edtTuNgay = findViewById(R.id.edt_TuNgay);
+        edtDenNgay = findViewById(R.id.edt_DenNgay);
+        btnThongKe = findViewById(R.id.btn_ThongKeKhachHang);
         rcvThongKeKhachHang = findViewById(R.id.rcv_ThongKeKhachHang);
         rcvThongKeKhachHang.setLayoutManager(new LinearLayoutManager(this));
 
-        setupDatePicker(findViewById(R.id.edt_TuNgay));
-        setupDatePicker(findViewById(R.id.edt_DenNgay));
+        setupDatePicker(edtTuNgay);
+        setupDatePicker(edtDenNgay);
 
-        loadData();
+        // Chỉ load dữ liệu khi người dùng nhấn nút THỐNG KÊ
+        btnThongKe.setOnClickListener(v -> {
+            loadData();
+            Toast.makeText(this, "Đã cập nhật thống kê khách hàng", Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void setupDatePicker(EditText editText) {
@@ -65,14 +76,18 @@ public class ActivityThongKeKhachHang extends AppCompatActivity {
         editText.setOnClickListener(v -> {
             java.util.Calendar calendar = java.util.Calendar.getInstance();
             new android.app.DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
-                String date = dayOfMonth + "/" + (month + 1) + "/" + year;
+                String date = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, (month + 1), dayOfMonth);
                 editText.setText(date);
             }, calendar.get(java.util.Calendar.YEAR), calendar.get(java.util.Calendar.MONTH), calendar.get(java.util.Calendar.DAY_OF_MONTH)).show();
         });
     }
 
     private void loadData() {
-        List<KhachHang> list = khachHangDAO.getAll();
+        List<KhachHang> list = khachHangDAO.getTopKhachHang();
+
+        if (list.isEmpty()) {
+            Toast.makeText(this, "Chưa có dữ liệu mua hàng", Toast.LENGTH_SHORT).show();
+        }
 
         rcvThongKeKhachHang.setAdapter(new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             @NonNull
@@ -88,7 +103,13 @@ public class ActivityThongKeKhachHang extends AppCompatActivity {
                 ((TextView) holder.itemView.findViewById(R.id.tv_MaKH)).setText(item.getMaKhachHang());
                 ((TextView) holder.itemView.findViewById(R.id.tv_TenKH)).setText(item.getTenKhachHang());
                 ((TextView) holder.itemView.findViewById(R.id.tv_SdtKH)).setText(item.getSoDienThoai());
-                ((TextView) holder.itemView.findViewById(R.id.tv_DoanhThu)).setText(String.format(Locale.getDefault(), "%,d VND", 0)); // Tạm thời để 0
+                
+                double doanhThu = 0;
+                try {
+                    doanhThu = Double.parseDouble(item.getEmail());
+                } catch (Exception e) {}
+                
+                ((TextView) holder.itemView.findViewById(R.id.tv_DoanhThu)).setText(String.format(Locale.getDefault(), "%,.0f VND", doanhThu));
             }
 
             @Override

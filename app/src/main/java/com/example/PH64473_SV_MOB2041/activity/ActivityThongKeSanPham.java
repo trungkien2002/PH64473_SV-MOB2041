@@ -3,8 +3,10 @@ package com.example.PH64473_SV_MOB2041.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,11 +22,14 @@ import com.example.PH64473_SV_MOB2041.R;
 import com.example.PH64473_SV_MOB2041.model.SanPham;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ActivityThongKeSanPham extends AppCompatActivity {
 
     private RecyclerView rcvThongKeSanPham;
     private SanPhamDAO sanPhamDAO;
+    private Button btnThongKe;
+    private EditText edtTuNgay, edtDenNgay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +41,7 @@ public class ActivityThongKeSanPham extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Thống kê sản phẩm");
+            getSupportActionBar().setTitle("Top sản phẩm bán chạy");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             toolbar.setNavigationOnClickListener(v -> finish());
         }
@@ -50,13 +55,20 @@ public class ActivityThongKeSanPham extends AppCompatActivity {
             });
         }
 
+        edtTuNgay = findViewById(R.id.edt_TuNgay);
+        edtDenNgay = findViewById(R.id.edt_DenNgay);
+        btnThongKe = findViewById(R.id.btn_ThongKeDoanhThu);
         rcvThongKeSanPham = findViewById(R.id.rcv_ThongKeSanPham);
+        
         rcvThongKeSanPham.setLayoutManager(new LinearLayoutManager(this));
 
-        setupDatePicker(findViewById(R.id.edt_TuNgay));
-        setupDatePicker(findViewById(R.id.edt_DenNgay));
+        setupDatePicker(edtTuNgay);
+        setupDatePicker(edtDenNgay);
 
-        loadData();
+        btnThongKe.setOnClickListener(v -> {
+            loadData();
+            Toast.makeText(this, "Đã cập nhật dữ liệu thống kê", Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void setupDatePicker(EditText editText) {
@@ -64,14 +76,14 @@ public class ActivityThongKeSanPham extends AppCompatActivity {
         editText.setOnClickListener(v -> {
             java.util.Calendar calendar = java.util.Calendar.getInstance();
             new android.app.DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
-                String date = dayOfMonth + "/" + (month + 1) + "/" + year;
+                String date = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, (month + 1), dayOfMonth);
                 editText.setText(date);
             }, calendar.get(java.util.Calendar.YEAR), calendar.get(java.util.Calendar.MONTH), calendar.get(java.util.Calendar.DAY_OF_MONTH)).show();
         });
     }
 
     private void loadData() {
-        List<SanPham> list = sanPhamDAO.getAll();
+        List<SanPham> list = sanPhamDAO.getTopBanChay();
 
         rcvThongKeSanPham.setAdapter(new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             @NonNull
@@ -86,8 +98,9 @@ public class ActivityThongKeSanPham extends AppCompatActivity {
                 SanPham item = list.get(position);
                 TextView tvTen = holder.itemView.findViewById(R.id.tv_TenSanPham);
                 TextView tvSoLuong = holder.itemView.findViewById(R.id.tv_SoLuongDaBan);
+                
                 tvTen.setText(item.getTenSanPham());
-                tvSoLuong.setText(String.valueOf(item.getSoLuongTonKho())); // Tạm thời dùng tồn kho
+                tvSoLuong.setText("Tổng bán: " + item.getSoLuongTonKho());
             }
 
             @Override
