@@ -1,183 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
-
-
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:text="CHỈNH SỬA NHÂN VIÊN"
-        android:textColor="@color/white"
-        android:padding="10dp"
-        android:background="@color/text_grey"
-        android:gravity="center"/>
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:layout_marginHorizontal="10dp"
-        android:gravity="center_vertical">
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_TieuDe"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Giới tính:"
-            android:textSize="16sp"
-            android:textColor="#000000" />
+            android:background="@color/text_grey"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="THÔNG TIN NHÂN VIÊN"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/spn_GioiTinh"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:spinnerMode="dropdown" />
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Mã nhân viên">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_MaNhanVien"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Tên nhân viên">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_TenNhanVien"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:passwordToggleEnabled="true"
+                android:hint="Mật khẩu">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_MatKhau"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Giới tính"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:hint="Chọn giới tính">
+
+                <AutoCompleteTextView
+                    android:id="@+id/spn_GioiTinh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Số điện thoại">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_SoDienThoaiNhanVien"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Địa chỉ">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_DiaChiNhanVien"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Lương">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_LuongNhanVien"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Ngày vào làm (YYYY-MM-DD)">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_NgayVaoLam"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_CapNhatNhanVien"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/text_grey"
+                    android:text="Lưu lại"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_HuyNhanVien"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@android:color/darker_gray"
+                    android:text="Hủy"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:textSize="15sp"
-        android:text="Mã nhân viên: "
-        />
-
-    <EditText
-        android:id="@+id/edt_MaNhanVien"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:textSize="15sp"
-        android:text="Tên nhân viên: "
-        />
-
-    <EditText
-        android:id="@+id/edt_TenNhanVien"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:textSize="15sp"
-        android:text="Số điện thoại: "
-        />
-
-    <EditText
-        android:id="@+id/edt_SoDienThoaiNhanVien"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:textSize="15sp"
-        android:text="Địa chỉ: "
-        />
-
-    <EditText
-        android:id="@+id/edt_DiaChiNhanVien"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:textSize="15sp"
-        android:text="Lương: "
-        />
-
-    <EditText
-        android:id="@+id/edt_LuongNhanVien"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:textSize="15sp"
-        android:text="Ngày vào làm: "
-        />
-    <EditText
-        android:id="@+id/edt_NgayVaoLam"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="20dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_CapNhatNhanVien"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/bg_button_grey"
-            android:text="Cập nhật"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:backgroundTint="@null" />
-
-        <Button
-            android:id="@+id/btn_HuyNhanVien"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/bg_button_grey"
-            android:text="Hủy"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:backgroundTint="@null" />
-    </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

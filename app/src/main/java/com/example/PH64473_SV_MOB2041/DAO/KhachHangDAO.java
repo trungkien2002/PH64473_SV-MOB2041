@@ -91,4 +91,25 @@ public class KhachHangDAO {
         long check = db.delete("KhachHang", "MaKhachHang=?", new String[]{maKH});
         return check != -1;
     }
+
+    public List<KhachHang> search(String query) {
+        List<KhachHang> list = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String sql = "SELECT * FROM KhachHang WHERE TenKhachHang LIKE ? OR MaKhachHang LIKE ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{"%" + query + "%", "%" + query + "%"});
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                list.add(new KhachHang(
+                        cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4)
+                ));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
 }

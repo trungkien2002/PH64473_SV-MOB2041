@@ -102,13 +102,26 @@ public class ActivityManHinhChinh extends AppCompatActivity {
         });
 
         btnDangXuat.setOnClickListener(v -> {
-            startActivity(new Intent(ActivityManHinhChinh.this, ActivityDangNhap.class));
-            finish();
+            showLogoutDialog();
         });
 
         btnDoiMatKhau.setOnClickListener(v -> {
-            startActivity(new Intent(ActivityManHinhChinh.this, ActivityDoiMatKhau.class));
+            Intent intent = new Intent(ActivityManHinhChinh.this, ActivityDoiMatKhau.class);
+            intent.putExtra("USERNAME", getIntent().getStringExtra("USERNAME"));
+            startActivity(intent);
         });
+    }
+
+    private void showLogoutDialog() {
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        builder.setTitle("Xác nhận");
+        builder.setMessage("Bạn có chắc chắn muốn đăng xuất không?");
+        builder.setPositiveButton("Đăng xuất", (dialog, which) -> {
+            startActivity(new Intent(ActivityManHinhChinh.this, ActivityDangNhap.class));
+            finish();
+        });
+        builder.setNegativeButton("Hủy", null);
+        builder.show();
     }
 
     @Override

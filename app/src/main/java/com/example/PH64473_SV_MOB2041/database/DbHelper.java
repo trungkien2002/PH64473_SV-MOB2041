@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class DbHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "PH64473_SV_MOB2041.db";
-    private static final int DB_VERSION = 4;
+    private static final int DB_VERSION = 7;
 
     public DbHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -52,7 +52,10 @@ public class DbHelper extends SQLiteOpenHelper {
                 "DiaChi TEXT NOT NULL, " +
                 "ChucVu TEXT NOT NULL, " +
                 "Luong REAL NOT NULL, " +
-                "MatKhau TEXT NOT NULL)";
+                "MatKhau TEXT NOT NULL, " +
+                "GioiTinh TEXT NOT NULL, " +
+                "SoDienThoai TEXT NOT NULL, " +
+                "NgayVaoLam TEXT NOT NULL)";
         db.execSQL(createTableNhanVien);
 
         // 5. Thực thể Hóa đơn
@@ -79,16 +82,16 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
         // 1. Nhân viên
-        db.execSQL("INSERT INTO NhanVien VALUES ('admin', 'Quản lý 1', 'Hà Nội', 'Quản lý', 20000000, 'admin')");
-        db.execSQL("INSERT INTO NhanVien VALUES ('nv01', 'Nguyễn Văn A', 'Hà Nội', 'Nhân viên', 8000000, '123')");
-        db.execSQL("INSERT INTO NhanVien VALUES ('nv02', 'Trần Thị B', 'Hà Nội', 'Nhân viên', 8500000, '123')");
-        db.execSQL("INSERT INTO NhanVien VALUES ('nv03', 'Lê Văn C', 'Hà Nội', 'Nhân viên', 7500000, '123')");
-        db.execSQL("INSERT INTO NhanVien VALUES ('nv04', 'Phạm Thị D', 'Hà Nội', 'Nhân viên', 9000000, '123')");
-        db.execSQL("INSERT INTO NhanVien VALUES ('nv05', 'Hoàng Văn E', 'Hà Nội', 'Nhân viên', 8200000, '123')");
-        db.execSQL("INSERT INTO NhanVien VALUES ('nv06', 'Vũ Thị F', 'Hà Nội', 'Nhân viên', 7800000, '123')");
-        db.execSQL("INSERT INTO NhanVien VALUES ('nv07', 'Đặng Văn G', 'Hà Nội', 'Nhân viên', 8100000, '123')");
-        db.execSQL("INSERT INTO NhanVien VALUES ('nv08', 'Bùi Thị H', 'Hà Nội', 'Nhân viên', 8400000, '123')");
-        db.execSQL("INSERT INTO NhanVien VALUES ('nv09', 'Đỗ Văn I', 'Hà Nội', 'Nhân viên', 7900000, '123')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('admin', 'Quản lý 1', 'Hà Nội', 'Quản lý', 20000000, 'admin', 'Nam', '0123456789', '2024-01-01')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv01', 'Nguyễn Văn A', 'Hà Nội', 'Nhân viên', 8000000, '123', 'Nam', '0987654321', '2024-02-01')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv02', 'Trần Thị B', 'Hà Nội', 'Nhân viên', 8500000, '123', 'Nữ', '0912345678', '2024-02-15')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv03', 'Lê Văn C', 'Hà Nội', 'Nhân viên', 7500000, '123', 'Nam', '0923456789', '2024-03-01')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv04', 'Phạm Thị D', 'Hà Nội', 'Nhân viên', 9000000, '123', 'Nữ', '0934567890', '2024-03-10')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv05', 'Hoàng Văn E', 'Hà Nội', 'Nhân viên', 8200000, '123', 'Nam', '0945678901', '2024-03-20')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv06', 'Vũ Thị F', 'Hà Nội', 'Nhân viên', 7800000, '123', 'Nữ', '0956789012', '2024-04-01')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv07', 'Đặng Văn G', 'Hà Nội', 'Nhân viên', 8100000, '123', 'Nam', '0967890123', '2024-04-10')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv08', 'Bùi Thị H', 'Hà Nội', 'Nhân viên', 8400000, '123', 'Nữ', '0978901234', '2024-04-15')");
+        db.execSQL("INSERT INTO NhanVien VALUES ('nv09', 'Đỗ Văn I', 'Hà Nội', 'Nhân viên', 7900000, '123', 'Nam', '0989012345', '2024-04-20')");
 
         // 2. Danh mục
         db.execSQL("INSERT INTO DanhMuc VALUES ('DM01', 'Đồ uống Nhật', '2024-05-01')");

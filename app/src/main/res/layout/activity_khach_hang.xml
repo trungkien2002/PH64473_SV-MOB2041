@@ -37,6 +37,8 @@
             android:id="@+id/rcv_DanhMuc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="80dp"
+            android:clipToPadding="false"
             tools:listitem="@layout/item_khach_hang"/>
     </LinearLayout>
 

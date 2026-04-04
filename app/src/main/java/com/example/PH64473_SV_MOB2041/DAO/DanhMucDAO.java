@@ -58,4 +58,23 @@ public class DanhMucDAO {
         long check = db.delete("DanhMuc", "MaDanhMuc=?", new String[]{maDM});
         return check != -1;
     }
+
+    public List<DanhMuc> search(String query) {
+        List<DanhMuc> list = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String sql = "SELECT * FROM DanhMuc WHERE TenDanhMuc LIKE ? OR MaDanhMuc LIKE ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{"%" + query + "%", "%" + query + "%"});
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                list.add(new DanhMuc(
+                        cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getString(2)
+                ));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
 }

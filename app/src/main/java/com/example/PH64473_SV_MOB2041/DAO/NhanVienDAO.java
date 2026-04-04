@@ -29,7 +29,10 @@ public class NhanVienDAO {
                         cursor.getString(2), // DiaChi
                         cursor.getString(3), // ChucVu
                         cursor.getDouble(4), // Luong
-                        cursor.getString(5)  // MatKhau
+                        cursor.getString(5), // MatKhau
+                        cursor.getString(6), // GioiTinh
+                        cursor.getString(7), // SoDienThoai
+                        cursor.getString(8)  // NgayVaoLam
                 ));
             } while (cursor.moveToNext());
         }
@@ -46,6 +49,9 @@ public class NhanVienDAO {
         values.put("ChucVu", nv.getChucVu());
         values.put("Luong", nv.getLuong());
         values.put("MatKhau", nv.getMatKhau());
+        values.put("GioiTinh", nv.getGioiTinh());
+        values.put("SoDienThoai", nv.getSoDienThoai());
+        values.put("NgayVaoLam", nv.getNgayVaoLam());
         long check = db.insert("NhanVien", null, values);
         return check != -1;
     }
@@ -58,6 +64,9 @@ public class NhanVienDAO {
         values.put("ChucVu", nv.getChucVu());
         values.put("Luong", nv.getLuong());
         values.put("MatKhau", nv.getMatKhau());
+        values.put("GioiTinh", nv.getGioiTinh());
+        values.put("SoDienThoai", nv.getSoDienThoai());
+        values.put("NgayVaoLam", nv.getNgayVaoLam());
         long check = db.update("NhanVien", values, "MaNhanVien=?", new String[]{nv.getMaNhanVien()});
         return check != -1;
     }
@@ -74,5 +83,40 @@ public class NhanVienDAO {
         boolean result = cursor.getCount() > 0;
         cursor.close();
         return result;
+    }
+
+    // Cập nhật mật khẩu cho tài khoản hiện tại
+    public boolean updatePass(String user, String newPass) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("MatKhau", newPass);
+        long check = db.update("NhanVien", values, "MaNhanVien=?", new String[]{user});
+        return check != -1;
+    }
+
+    // Tìm kiếm nhân viên theo tên hoặc mã
+    public List<NhanVien> search(String query) {
+        List<NhanVien> list = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String sql = "SELECT * FROM NhanVien WHERE TenNhanVien LIKE ? OR MaNhanVien LIKE ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{"%" + query + "%", "%" + query + "%"});
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                list.add(new NhanVien(
+                        cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getDouble(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getString(7),
+                        cursor.getString(8)
+                ));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
     }
 }

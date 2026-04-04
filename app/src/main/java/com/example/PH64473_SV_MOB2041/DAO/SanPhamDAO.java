@@ -96,4 +96,27 @@ public class SanPhamDAO {
         long check = db.delete("SanPham", "MaSanPham=?", new String[]{maSP});
         return check != -1;
     }
+
+    public List<SanPham> search(String query) {
+        List<SanPham> list = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String sql = "SELECT * FROM SanPham WHERE TenSanPham LIKE ? OR MaSanPham LIKE ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{"%" + query + "%", "%" + query + "%"});
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                list.add(new SanPham(
+                        cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getDouble(3),
+                        cursor.getInt(4),
+                        cursor.getString(5),
+                        cursor.getString(6)
+                ));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
 }

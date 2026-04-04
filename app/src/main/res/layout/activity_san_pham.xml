@@ -48,6 +48,8 @@
             android:id="@+id/rcv_SanPham"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="80dp"
+            android:clipToPadding="false"
             tools:listitem="@layout/item_san_pham"/>
     </LinearLayout>
 

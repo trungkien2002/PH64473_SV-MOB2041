@@ -3,8 +3,12 @@ package com.example.PH64473_SV_MOB2041.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.content.SharedPreferences;
+import android.text.InputType;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -23,7 +27,11 @@ public class ActivityDangNhap extends AppCompatActivity {
 
     private EditText edtTenTaiKhoan, edtMatKhau;
     private Button btnDangNhap;
+    private CheckBox cbGhiNho;
+    private ImageView ivHienThiMatKhau;
     private NhanVienDAO nhanVienDAO;
+    private SharedPreferences sharedPreferences;
+    private boolean isPasswordVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +40,7 @@ public class ActivityDangNhap extends AppCompatActivity {
         setContentView(R.layout.activity_dang_nhap);
         
         nhanVienDAO = new NhanVienDAO(this);
+        sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
 
         View mainView = findViewById(R.id.main_login);
         if (mainView != null) {
@@ -45,6 +54,26 @@ public class ActivityDangNhap extends AppCompatActivity {
         edtTenTaiKhoan = findViewById(R.id.edt_TenTaiKhoan);
         edtMatKhau = findViewById(R.id.edt_MatKhau);
         btnDangNhap = findViewById(R.id.btn_DangNhap);
+        cbGhiNho = findViewById(R.id.cb_GhiNhoMatKhau);
+        ivHienThiMatKhau = findViewById(R.id.iv_HienThiMatKhau);
+
+        // Đọc dữ liệu ghi nhớ mật khẩu
+        edtTenTaiKhoan.setText(sharedPreferences.getString("USERNAME", ""));
+        edtMatKhau.setText(sharedPreferences.getString("PASSWORD", ""));
+        cbGhiNho.setChecked(sharedPreferences.getBoolean("REMEMBER", false));
+
+        // Tính năng ẩn hiện mật khẩu
+        ivHienThiMatKhau.setOnClickListener(v -> {
+            isPasswordVisible = !isPasswordVisible;
+            if (isPasswordVisible) {
+                edtMatKhau.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                ivHienThiMatKhau.setImageResource(android.R.drawable.ic_menu_close_clear_cancel); // Icon ẩn
+            } else {
+                edtMatKhau.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                ivHienThiMatKhau.setImageResource(android.R.drawable.ic_menu_view); // Icon hiện
+            }
+            edtMatKhau.setSelection(edtMatKhau.getText().length());
+        });
 
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,10 +86,13 @@ public class ActivityDangNhap extends AppCompatActivity {
                     return;
                 }
 
-                // Kiểm tra đăng nhập từ Database thực tế
+                // Kiểm tra đăng nhập
                 if (nhanVienDAO.checkLogin(user, pass)) {
-                    // Lấy thông tin nhân viên để biết chức vụ (Role)
-                    String role = "nhanvien"; // Mặc định
+                    // Lưu thông tin ghi nhớ mật khẩu
+                    rememberUser(user, pass, cbGhiNho.isChecked());
+
+                    // Lấy role
+                    String role = "nhanvien";
                     List<NhanVien> list = nhanVienDAO.getAll();
                     for (NhanVien nv : list) {
                         if (nv.getMaNhanVien().equals(user)) {
@@ -71,6 +103,7 @@ public class ActivityDangNhap extends AppCompatActivity {
 
                     Intent intent = new Intent(ActivityDangNhap.this, ActivityManHinhChinh.class);
                     intent.putExtra("ROLE", role);
+                    intent.putExtra("USERNAME", user); // Truyền username để dùng cho đổi mật khẩu
                     startActivity(intent);
                     finish();
                 } else {
@@ -78,5 +111,18 @@ public class ActivityDangNhap extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    // Hàm lưu thông tin đăng nhập vào SharedPreferences
+    private void rememberUser(String user, String pass, boolean status) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (!status) {
+            editor.clear();
+        } else {
+            editor.putString("USERNAME", user);
+            editor.putString("PASSWORD", pass);
+            editor.putBoolean("REMEMBER", status);
+        }
+        editor.commit();
     }
 }

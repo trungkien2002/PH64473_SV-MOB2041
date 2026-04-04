@@ -7,17 +7,23 @@ public class NhanVien {
     private String chucVu;
     private double luong;
     private String matKhau;
+    private String gioiTinh;
+    private String soDienThoai;
+    private String ngayVaoLam;
 
     public NhanVien() {
     }
 
-    public NhanVien(String maNhanVien, String tenNhanVien, String diaChi, String chucVu, double luong, String matKhau) {
+    public NhanVien(String maNhanVien, String tenNhanVien, String diaChi, String chucVu, double luong, String matKhau, String gioiTinh, String soDienThoai, String ngayVaoLam) {
         this.maNhanVien = maNhanVien;
         this.tenNhanVien = tenNhanVien;
         this.diaChi = diaChi;
         this.chucVu = chucVu;
         this.luong = luong;
         this.matKhau = matKhau;
+        this.gioiTinh = gioiTinh;
+        this.soDienThoai = soDienThoai;
+        this.ngayVaoLam = ngayVaoLam;
     }
 
     public String getMaNhanVien() { return maNhanVien; }
@@ -32,4 +38,10 @@ public class NhanVien {
     public void setLuong(double luong) { this.luong = luong; }
     public String getMatKhau() { return matKhau; }
     public void setMatKhau(String matKhau) { this.matKhau = matKhau; }
+    public String getGioiTinh() { return gioiTinh; }
+    public void setGioiTinh(String gioiTinh) { this.gioiTinh = gioiTinh; }
+    public String getSoDienThoai() { return soDienThoai; }
+    public void setSoDienThoai(String soDienThoai) { this.soDienThoai = soDienThoai; }
+    public String getNgayVaoLam() { return ngayVaoLam; }
+    public void setNgayVaoLam(String ngayVaoLam) { this.ngayVaoLam = ngayVaoLam; }
 }
